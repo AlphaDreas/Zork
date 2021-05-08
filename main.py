@@ -1,108 +1,121 @@
-location = [
-[" ", " ", " "],
-[" ", " ", " "],
-[" ", " ", " "]
-]
+floor0 = ['nothing', 'sword', 'monster', 'stairs up', 'sword']
+floor1 = ['stairs down', 'monster', 'stairs up', 'monster', 'sword']
+floor2 = ['magic stone', 'stairs down', 'sword', 'boss monster', 'prize']
+dungeon = [floor0, floor1, floor2]
+items = []
+user_room = 0
+user_floor = 0
+game_over = False
+win = False
+can_retreat = False
 
-
-Player1 = input("What is player X's name? ")
-Player2 = input("What is player O's name? ")
-
-U1Q = "It is currently " + Player1 + "'s turn"
-U2Q = "It is currently " + Player2 + "'s turn"
-
-
-turn = 1
-while turn <= 9:
-  if turn%2 == 1:
-    print(U1Q)
-    answer1 = int(input("What row would you like to mark? "))
-    answer2 = int(input("What column would you like to mark? "))
-    if location[answer1-1][answer2-1] == "X":
-      print(Player1 + " that spot has already been taken")
-      U1Q = "Please pick again"
-    elif location[answer1-1][answer2-1] == "O":
-      print(Player1 + " that spot has already been taken")
-      U1Q = "Please pick again"
-    else: 
-        location[answer1-1][answer2-1] = 'X'
-        print(location[0][0] + '|' + location[0][1] + '|' + location[0][2])
-        print("-----")
-        print(location[1][0] + '|' + location[1][1] + '|' + location[1][2])
-        print("-----")
-        print(location[2][0] + '|' + location[2][1] + '|' + location[2][2])
-        turn += 1
-        U1Q = "It is currently " + Player1 + "'s turn"
-        if location[0][0] == "X" and location[0][1] == "X" and location[0][2] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif location[1][0] == "X" and location[1][1] == "X" and location[1][2] == "X":
-          print(Player1 + " won the game!")
-          turn = 10 
-        elif location[2][0] == "X" and location[2][1] == "X" and location[2][2] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif location[0][0] == "X" and location[1][0] == "X" and location[2][0] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif location[0][1] == "X" and location[1][1] == "X" and location[2][1] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif location[0][2] == "X" and location[1][2] == "X" and location[2][2] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif location[0][0] == "X" and location[1][1] == "X" and location[2][2] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif location[0][2] == "X" and location[1][1] == "X" and location[2][0] == "X":
-          print(Player1 + " won the game!")
-          turn = 10
-        elif turn == 10:
-          print("The Game ended in a tie!")
-          
-          
-          
-  else:
-    print(U2Q)
-    answer1 = int(input("What row would you like to mark? "))
-    answer2 = int(input("What column would you like to mark? "))
-    if location[answer1-1][answer2-1] == "X":
-      print(Player2 + " that spot has already been taken")
-      U2Q = "Please pick again"
-    elif location[answer1-1][answer2-1] == "O":
-      print(Player2 + " that spot has already been taken")
-      U2Q = "Please pick again"
+while game_over == False:
+  command = input("Type in a command ")
+  
+  
+  if command == "left":
+    if dungeon[user_floor][user_room] == "monster" or dungeon[user_floor][user_room] == "boss monster":
+      print("Use the commands 'fight' or 'retreat.")
+      can_retreat = True
     else:
-        location[answer1-1][answer2-1] = 'O'
-        print(location[0][0] + '|' + location[0][1] + '|' + location[0][2])
-        print("-----")
-        print(location[1][0] + '|' + location[1][1] + '|' + location[1][2])
-        print("-----")
-        print(location[2][0] + '|' + location[2][1] + '|' + location[2][2])
-        turn += 1
-        U2Q = "It is currently " + Player2 + "'s turn"
-        if location[0][0] == "O" and location[0][1] == "O" and location[0][2] == "O":
-          print(Player2 + " won the game!")
-        elif location[1][0] == "O" and location[1][1] == "O" and location[1][2] == "O":
-          print(Player2 + " won the game!")
-          turn = 10 
-        elif location[2][0] == "O" and location[2][1] == "O" and location[2][2] == "O":
-          print(Player2 + " won the game!")
-          turn = 10
-        elif location[0][0] == "O" and location[1][0] == "O" and location[2][0] == "O":
-          print(Player2 + " won the game!")
-          turn = 10
-        elif location[0][1] == "O" and location[1][1] == "O" and location[2][1] == "O":
-          print(Player2 + " won the game!")
-          turn = 10
-        elif location[0][2] == "O" and location[1][2] == "O" and location[2][2] == "O":
-          print(Player2 + " won the game!")
-          turn = 10
-        elif location[0][0] == "O" and location[1][1] == "O" and location[2][2] == "O":
-          print(Player2 + " won the game!")
-          turn = 10
-        elif location[0][2] == "O" and location[1][1] == "O" and location[2][0] == "O":
-          print(Player2 + " won the game!")
-          turn = 10
-        elif turn == 10:
-          print("The Game ended in a tie!")
+      if user_room - 1 >= 0:
+        user_room = user_room - 1
+      else:
+        print("Can't go left anymore.")
+           
+  
+  elif command == "right":
+    if dungeon[user_floor][user_room] == "monster" or dungeon[user_floor][user_room] == "boss monster":
+      break
+    else:
+      if user_room < 4:
+        user_room = user_room + 1
+      else:
+        print("Can't go right anymore.")
+      
+  elif command == "up":
+    if user_floor == 0 and user_room == 3:
+      user_floor = user_floor + 1 
+      user_room = 0
+      print("You found stairs that go up.")
+    elif user_floor == 1 and user_room == 2:
+      user_floor = user_floor + 1 
+      user_room = 1
+      print("You found stairs that go up.")
+    else:
+      print("No stairs, can't go up.")
+
+  elif command == "down":
+    if user_floor == 1 and user_room == 0:
+      user_floor = user_floor - 1
+      user_room = 3
+      print("You found stairs that go down.")
+    elif user_floor == 2 and user_room == 1:
+      user_floor = user_floor - 1 
+      user_room = 2
+    else:
+      print("No stairs, can't go down.")
+  elif command == "exit":
+    break
+  
+  elif command == "retreat":
+    if can_retreat == True:
+      if user_floor == 0 or user_floor == 2:
+        user_room = user_room - 1
+        can_retreat = False
+      else:
+        user_room = user_room - 1
+        can_retreat = False
+    else:
+      print("Nothing to retreat from.")
+  
+  elif command == "grab":
+    if len(items) < 3:
+      if dungeon[user_floor][user_room] == "sword":
+        items.append("sword")
+        print("You got a sword!")
+        dungeon[user_floor][user_room] = "nothing"
+      elif user_floor == 2 and user_room == 0:
+        items.append("magic stones")
+        print("You got magic stones!")
+        dungeon[user_floor][user_room] = "nothing"
+      elif dungeon[user_floor][user_room] == "prize":
+        items.append("prize")
+        print("You got the prize!")
+        dungeon[user_floor][user_room] = "nothing"
+        game_over = True
+        win = True
+      else:
+        print("nothing")
+    elif len(items) >= 3:
+      print("You are holding the max amount of items.")
+      
+    
+  
+  elif command == "fight":
+    if dungeon[user_floor][user_room] == "monster":
+      if "sword" in items:
+        print("You defeated the monster but you lost your sword")
+        items.remove("sword")
+        dungeon[user_floor][user_room] = "nothing"
+      else: 
+        print("You can't fight a monster without a sword.")
+    elif dungeon[user_floor][user_room] == "boss monster":
+      if "sword" in items and "magic stones" in items:
+        print("You’ve slayed the boss monster with the sword and magic stone")
+        dungeon[user_floor][user_room] = "nothing"
+        items.remove("sword")
+        items.remove("magic stones")
+      else:
+        print("You need a sword and magic stones to fight the boss monster")
+    else:
+      print("There is no monster here.")
+  
+  elif command == "quit":
+    game_over = True
+    win = False
+
+if win == True:
+  print("You Won!")
+else:
+  print("game over")
